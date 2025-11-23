@@ -1,140 +1,79 @@
 
-# Flutter GPS Location App
+# Aplikasi Pengukur Temperatur dan Kelembaban
 
-Aplikasi Flutter sederhana untuk memperoleh **koordinat lokasi pengguna (latitude & longitude)** serta mengonversinya menjadi **alamat lengkap** menggunakan package `geolocator` dan `geocoding`.
+Aplikasi Flutter untuk mengukur temperatur dan kelembaban berbasis lokasi menggunakan API OpenWeatherMap. Aplikasi ini dikembangkan sebagai bagian dari program Pengabdian Kepada Masyarakat (PKM).
 
----
+## Fitur Utama
 
-## 📌 Fitur Utama
+1. **Pengambilan Lokasi Otomatis**
+   - Aplikasi secara otomatis mendeteksi lokasi pengguna menggunakan GPS
+   - Meminta izin lokasi sesuai dengan kebijakan platform
 
-### ✅ 1. Mendapatkan Lokasi Saat Ini
-- Mengambil posisi GPS real–time dari perangkat.
-- Menggunakan:
-  ```dart
-  Geolocator.getCurrentPosition()
-  ```
-- Hasil ditampilkan dalam format:
-  ```
-  Latitude: xx.xxxxxx
-  Longitude: yy.yyyyyy
-  ```
+2. **Pengukuran Temperatur dan Kelembaban**
+   - Menampilkan temperatur dalam satuan Celsius
+   - Menampilkan tingkat kelembaban udara dalam persentase
+   - Menyediakan tombol untuk memperbarui data
 
----
+3. **Sistem Peringatan**
+   - Notifikasi otomatis saat suhu melebihi 30°C
+   - Notifikasi otomatis saat kelembaban di bawah 40%
 
-### ✅ 2. Request Permission Lokasi
-- Mengecek status permission sebelum akses GPS.
-- Jika belum diizinkan, aplikasi meminta izin otomatis.
-- Mencegah error akses lokasi tanpa izin.
+4. **Riwayat Pengukuran**
+   - Mencatat hasil pengukuran sebelumnya dengan timestamp
+   - Menyimpan data secara lokal dalam aplikasi
 
----
+5. **Edukasi Kenyamanan Termal**
+   - Menyediakan informasi tentang suhu dan kelembaban ideal
+   - Memberikan tips untuk menciptakan kenyamanan termal
 
-### ✅ 3. Reverse Geocoding (Koordinat → Alamat)
-- Mengubah koordinat menjadi alamat manusiawi.
-- Menggunakan:
-  ```dart
-  placemarkFromCoordinates()
-  ```
-- Menampilkan informasi seperti:
-  - Nama jalan
-  - Kota
-  - Kecamatan
-  - Negara
+## Instalasi
 
----
+1. Pastikan Flutter SDK telah terinstal di sistem
+2. Clone atau download repository ini
+3. Jalankan perintah berikut:
+   ```
+   flutter pub get
+   ```
+4. Build dan jalankan aplikasi:
+   ```
+   flutter run
+   ```
 
-### ✅ 4. UI Sederhana & Responsif
-- `AppBar` dengan teks putih **bold**
-- Tombol untuk mengambil lokasi (`ElevatedButton`)
-- Menampilkan hasil lokasi & alamat dalam `Column`
+## Dependensi
 
----
+Aplikasi ini menggunakan beberapa paket pihak ketiga:
 
-## 🧠 Cara Kerja Aplikasi
+- `http`: Untuk permintaan API ke OpenWeatherMap
+- `geolocator`: Untuk mendapatkan informasi lokasi
+- `flutter_local_notifications`: Untuk menampilkan notifikasi lokal
+- `cupertino_icons`: Untuk ikon dalam UI
 
-1. User menekan tombol **"Get Location"**
-2. App memeriksa permission lokasi
-3. Jika diizinkan, GPS membaca koordinat
-4. Koordinat dikonversi menjadi alamat
-5. Hasil ditampilkan pada layar
-
-Flow inti dalam kode:
-
-```dart
-Position position = await Geolocator.getCurrentPosition();
-List<Placemark> placemark = await placemarkFromCoordinates(
-  position.latitude,
-  position.longitude,
-);
-```
-
----
-
-## 📂 Struktur File
+## Struktur Proyek
 
 ```
 lib/
-└── main.dart   # Seluruh logic UI & GPS berada di sini
+├── main.dart     // File utama aplikasi
 ```
 
----
+## Konfigurasi Platform
 
-## 🔧 Dependency yang Digunakan
-
-Tambahkan pada `pubspec.yaml`:
-
-```yaml
-dependencies:
-  geolocator: ^10.1.0
-  geocoding: ^2.1.0
-```
-
-Lalu jalankan:
-
-```
-flutter pub get
-```
-
----
-
-## 📱 Permission yang Diperlukan
-
-### Android – `android/app/src/main/AndroidManifest.xml`
-Tambahkan:
+### Android
+File `android/app/src/main/AndroidManifest.xml` telah dilengkapi dengan izin lokasi dan internet:
 
 ```xml
-<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+<uses-permission android:name="android.permission.INTERNET" />
+<uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 ```
 
-### iOS – `ios/Runner/Info.plist`
-Tambahkan:
+### Penggunaan API Key
+Aplikasi ini menggunakan API OpenWeatherMap dengan API key yang tersimpan dalam kode. Pastikan untuk mengganti API key dengan yang valid jika ingin menggunakan aplikasi ini secara produksi.
 
-```xml
-<key>NSLocationWhenInUseUsageDescription</key>
-<string>This app requires location access.</string>
-```
+## Kontribusi
 
----
+Silakan fork repository ini dan kirimkan pull request jika Anda ingin berkontribusi pada pengembangan aplikasi ini.
 
-## ▶️ Menjalankan Aplikasi
+## Lisensi
 
-```
-flutter run
-```
-
-Tekan tombol **Get Location** untuk menampilkan data.
-
----
-
-## 📌 Catatan Tambahan
-- Pastikan GPS aktif
-- Emulator Android harus menggunakan **Google Play image**
-- Pada iOS, hanya dapat tes lokasi melalui device real atau simulator dengan lokasi simulasi
-
----
-
-## ✅ Status
-Project siap dikembangkan lebih lanjut — seperti:
-- Menampilkan lokasi di Google Maps
-- Auto-refresh location stream
-- Menyimpan riwayat lokasi
+Proyek ini merupakan bagian dari program Pengabdian Kepada Masyarakat dan dapat digunakan secara bebas untuk tujuan pendidikan dan pengembangan masyarakat.
